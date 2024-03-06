@@ -10,7 +10,7 @@ import {Homepage , SearchMap } from "./Pages" ;
 import State from './context/State';
 
 const App = () => {
-  axios.defaults.baseURL = "http://localhost:7000";
+  axios.defaults.baseURL = "https://ewastedisposal.onrender.com";
   axios.defaults.withCredentials = true;
   return (
     <div>
