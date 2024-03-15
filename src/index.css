@@ -10,9 +10,10 @@
 
 :root {
 --background-color-light : #FAF9F6;
---background-color-dark : #222222;
+--background-color-dark : #242424;
 --text-color-dark : #FAF9F6;
---text-color-light : #222222;
+--text-color-light : #2f2f2f;
+--accent : #2a9d8f
 }
 
 ::-webkit-scrollbar {
@@ -21,10 +22,10 @@
 
 body{
   background-color: var(--background-color-dark);
-  color: var(--text-color-dark);
+  /* color: var(--text-color-dark); */
  
 }
-
+/* 
 input{
   background-color: var(--background-color-dark);
   color: var(--text-color-dark);
@@ -70,7 +71,7 @@ button{
   color: var(--text-color-light);
 }
 
-
+ */
 
 
 

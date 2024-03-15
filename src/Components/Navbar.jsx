@@ -33,16 +33,16 @@ const Navbar = () => {
   const { isSignedIn, user, isLoaded } = useUser();
 
   return (
-    <div className='shadow-3xl '>
+    <div className='shadow-3xl bg-sec-black border-b border-accent  '>
     <Wrapper>
-      <div className='justify-between items-center flex h-[15vh]'>
-      {!isSignedIn && <SignInButton />}
+      <div className='justify-between items-center flex h-[15vh] '>
+      {/* {!isSignedIn && <SignInButton />} */}
           <UserButton />
         <div className='md:flex hidden relative justify-between items-center gap-[10vh]'>  
         <nav >
           <ul className="hidden md:flex gap-10 justify-center items-center ">
             <li
-              className="font-semibold font-montserrat hover:text-[#01796f] cursor-pointer nav"
+              className="font-semibold font-montserrat text-accent hover:text-[#01796f] cursor-pointer nav"
               onClick={() => navigate("/")}
             >
               <a>Home</a>

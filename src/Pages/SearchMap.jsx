@@ -99,7 +99,7 @@ console.log("I know this will work ! right ? " , data);
               "line-cap": "round",
             },
             paint: {
-              "line-color": "#3887be",
+              "line-color": "#25a18e",
               "line-width": 5,
               "line-opacity": 0.75,
             },
@@ -133,7 +133,7 @@ console.log("I know this will work ! right ? " , data);
             },
             paint: {
               "circle-radius": 10,
-              "circle-color": "#3887be",
+              "circle-color": "#25a18e",
             },
           });
         }
@@ -164,11 +164,11 @@ console.log("I know this will work ! right ? " , data);
             },
             paint: {
               "circle-radius": 10,
-              "circle-color": "#f30",
+              "circle-color": "#25a18e",
             },
           });
         }
-        const Newmarker = await new mapboxgl.Marker({ color: "green" })
+        const Newmarker = await new mapboxgl.Marker({ color: "#25a18e" })
           .setLngLat(searchCoordinates)
           
         Newmarker.addTo(map);
@@ -271,7 +271,7 @@ console.log("I know this will work ! right ? " , data);
   return (
     <Wrapper>
       
-      <div className="relative mt-[2vh]">
+      <div className="relative mt-[2vh] bg-sec-black">
 
       
 
@@ -295,16 +295,16 @@ console.log("I know this will work ! right ? " , data);
       </div>
       {centersData.length > 0 && <div>
       <div className="w-full h-fit mt-[2vh]">
-        <h1 className="mb-[5vh] font-montserrat font-bold text-2xl ">
+        <h1 className="mb-[5vh] font-montserrat font-bold text-2xl text-white ">
           Search Results
         </h1>
         <div className="flex flex-col md:flex-row gap-4 flex-wrap">
         {centersData?.map((item) => (
-            <div className="h-fit items-center gap-[2vw] shadow-3xl p-4 rounded-lg bg-[#ff5757] md:max-w-[60vh]">
-              <p className="font-montserrat font-semibold ">{item?.Name_Address}</p>
-              <h2 className="font-montserrat font-bold mt-2 ">Capacity : {item?.Installed_Capacity_Metric_Tons_per_Annum_MTA}</h2>
+            <div className="h-fit items-center gap-[2vw] shadow-3xl p-4 rounded-lg bg-sec-black md:max-w-[60vh] border-accent border-2">
+              <p className="font-montserrat font-semibold  text-white">{item?.Name_Address}</p>
+              <h2 className="font-montserrat font-bold mt-2 text-white ">Capacity : <span className="text-accent"> {item?.Installed_Capacity_Metric_Tons_per_Annum_MTA} </span></h2>
               <button
-              className="hover:bg-[#ff5757] mt-[2vh] hover:scale-105 shadow-3xl transition-transform  font-montserrat font-semibold p-2 rounded-lg  w-fit"
+              className="hover:bg-accent bg-white mt-[2vh] hover:scale-105 shadow-lg  hover:text-white transition-transform  font-montserrat font-semibold p-2 rounded-lg  w-fit"
               onClick={()=>{handleSearch(item?.Name_Address)}}
             >
               Go

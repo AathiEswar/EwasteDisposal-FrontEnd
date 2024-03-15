@@ -5,6 +5,13 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    colors: {
+      "accent" : "#25a18e" ,
+      "sec-black" : "#181818",
+      "pri-black" : "#242424",
+      "white" : "#FAF9F6",
+      "gray" : "#a7a7a7"
+    },
     extend:
     {
       fontFamily: {
@@ -19,7 +26,12 @@ export default {
         'multiply': 'multiply', // Object of blend modes
         'screen': 'screen',
       },
+
+      
     },
+
+
+    
   },
   plugins: [],
 }
