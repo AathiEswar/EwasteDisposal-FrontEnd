@@ -11,6 +11,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@clerk/clerk-react": "^4.30.7",
+    "@clerk/themes": "^1.7.10",
     "@flaticon/flaticon-uicons": "^2.4.0",
     "@mapbox/polyline": "^1.2.0",
     "axios": "^1.6.7",

@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import Context from "../context/Context";
+import { useUser } from "@clerk/clerk-react";
 
 
 
@@ -13,7 +14,7 @@ const Poster = () => {
   const [state1, setstate1] = useState([]);
 
   const navigate = useNavigate();
-
+  const { isSignedIn, user, isLoaded } = useUser();
   const changestate = (city) => {
     const matchingStateItem = state1.find((item) => {
       const foundCity = item?.cities?.find((cityItem) => city === cityItem);
@@ -56,6 +57,8 @@ const Poster = () => {
           </p>
 
           <div className="mt-10 flex  gap-5">
+
+          {isSignedIn ?
             <button
               className="hover:bg-[#01796f] hover:scale-105 shadow-3xl transition-transform  font-montserrat font-semibold p-4 rounded-lg  w-fit"
               onClick={() => {
@@ -63,7 +66,7 @@ const Poster = () => {
               }}
             >
               Locate Facility
-            </button>
+            </button> : <h1>SIGN IN TO START LOCATING</h1> }
           </div>
         </div>
         <div className="hidden md:flex w-full justify-center "></div>

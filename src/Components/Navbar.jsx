@@ -9,6 +9,9 @@ import { useNavigate } from 'react-router-dom';
 import { BiCoinStack } from "react-icons/bi";
 import { GrLocation } from "react-icons/gr";
 import { useEffect } from 'react';
+import { SignInButton, UserButton } from "@clerk/clerk-react";
+import { useUser } from "@clerk/clerk-react";
+
 const Navbar = () => {
 
   const {isdark , setisdark , setislogin , Location} = useContext(Context)
@@ -27,7 +30,7 @@ const Navbar = () => {
     }
   }
 
-  
+  const { isSignedIn, user, isLoaded } = useUser();
 
   return (
     <div className='shadow-3xl '>
@@ -43,6 +46,11 @@ const Navbar = () => {
             >
               <a>Home</a>
             </li>
+            <li
+              // className="font-semibold font-montserrat hover:text-[#01796f] cursor-pointer nav"
+              // onClick={() => navigate("/")}
+            > 
+            </li>
            
           </ul>
         </nav>
@@ -51,13 +59,13 @@ const Navbar = () => {
         </div>
         <div className='md:flex hidden gap-[5vh] items-center'>
           {!Location ? (<h1 className=' font-montserrat font-bold text-red-400 flex items-center gap-[1vh]'><i className="fi fi-rr-marker"></i>Location</h1>) : (<h1 className=' font-montserrat font-bold text-red-400 flex items-center gap-[1vh]'><i class="fi fi-rr-marker"></i>{Location}</h1>)}
-          
-      
+         {!isSignedIn && <SignInButton />}
+          <UserButton />
         </div>
 
-        {/* Mobile Menu */}
+     
         <div className='md:hidden flex items-center gap-[5vh]'>
-        {
+        {/* {
           !isdark ? (<button
             className="shadow-5xl font-medium font-poppins hover:text-[#01796f] transition-transform nav"
             onClick={()=>{modetoggle()}}
@@ -69,10 +77,12 @@ const Navbar = () => {
             >
               <i className="fi fi-br-brightness"></i>
             </button>)
-        }
+        } */}
+        
           <button className=' font-medium font-poppins hover:text-[#01796f] transition-transform'>
           <i className="fi fi-br-menu-burger text-xl"></i>
           </button>
+          
         </div>
       </div>
     </Wrapper>
