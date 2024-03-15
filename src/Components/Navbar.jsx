@@ -59,9 +59,9 @@ const Navbar = () => {
         
         </div>
         <div className='md:flex hidden gap-[5vh] items-center'>
-          {!Location ? (<h1 className=' font-montserrat font-bold text-red-400 flex items-center gap-[1vh]'><i className="fi fi-rr-marker"></i>Location</h1>) : (<h1 className=' font-montserrat font-bold text-red-400 flex items-center gap-[1vh]'><i class="fi fi-rr-marker"></i>{Location}</h1>)}
+          {/* {!Location ? (<h1 className=' font-montserrat font-bold text-red-400 flex items-center gap-[1vh]'><i className="fi fi-rr-marker"></i>Location</h1>) : (<h1 className=' font-montserrat font-bold text-red-400 flex items-center gap-[1vh]'><i class="fi fi-rr-marker"></i>{Location}</h1>)}
          {!isSignedIn && <SignInButton />}
-          <UserButton />
+          <UserButton /> */}
         </div>
 
      
