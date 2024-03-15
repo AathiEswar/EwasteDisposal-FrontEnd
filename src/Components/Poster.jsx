@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 
-import { SignInButton} from "@clerk/clerk-react";
+import { SignInButton } from "@clerk/clerk-react";
 
 import map from "../assets/world.jpg";
 import { useNavigate } from "react-router-dom";
@@ -30,7 +30,6 @@ const Poster = () => {
 
   return (
     <div>
-  
       <div
         className="flex relative rounded-lg  pt-[2vh] mt-[5vh] gap-10 justify-center items-center md:max-h-[70vh]  "
         id="searchposter"
@@ -45,7 +44,8 @@ const Poster = () => {
         </div>
         <div className="postercard w-full h-fit  mt-[5vh] shadow-3xl rounded-xl p-[3vh]  other md:ml-5 mb-10 z-10 searchtext bg-sec-black">
           <h1 className="md:text-[5vh] text-[5vh] font-montserrat  font-bold text-accent">
-            Welcome To <span className="text-accent">E-Waste Facility Locator</span>
+            Welcome To{" "}
+            <span className="text-accent">E-Waste Facility Locator</span>
           </h1>
           <p className=" text-gray text-lg font-montserrat font-medium">
             In an effort to combat the growing issue of electronic waste
@@ -56,19 +56,22 @@ const Poster = () => {
           </p>
 
           <div className="mt-10 flex  gap-5">
-
-        
-         
-
-            {isSignedIn ?
-            <button
-              className="text-sec-black hover:text-accent bg-accent hover:bg-pri-black hover:scale-105 hover:shadow-3xl hover:shadow-accent transition-transform  font-montserrat font-semibold p-4 rounded-lg  w-fit"
-              onClick={() => {
-                navigate(`/search`);
-              }}
-            >
-              Locate Facility
-            </button> :<SignInButton />}
+            {isSignedIn ? (
+              <button
+               className="text-sec-black hover:text-accent bg-accent hover:bg-sec-black hover:scale-105 hover:shadow-[0_0_10px_0_rgba(0,0,0,0.3)] hover:shadow-accent transition-transform  font-montserrat font-semibold p-4 rounded-lg  w-fit"
+                onClick={() => {
+                  navigate(`/search`);
+                }}
+              >
+                Locate Facility
+              </button>
+            ) : (
+              <SignInButton>
+                <button className="text-sec-black hover:text-accent bg-accent hover:bg-sec-black hover:scale-105 hover:shadow-[0_0_10px_0_rgba(0,0,0,0.3)] hover:shadow-accent transition-transform  font-montserrat font-semibold p-4 rounded-lg  w-fit">
+                  Sign in 
+                </button>
+              </SignInButton>
+            )}
           </div>
         </div>
         <div className="hidden md:flex w-full justify-center "></div>

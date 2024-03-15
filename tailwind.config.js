@@ -7,8 +7,8 @@ export default {
   theme: {
     colors: {
       "accent" : "#25a18e" ,
-      "sec-black" : "#181818",
-      "pri-black" : "#242424",
+      "sec-black" : "#202020",
+      "pri-black" : "#333533",
       "white" : "#FAF9F6",
       "gray" : "#a7a7a7"
     },

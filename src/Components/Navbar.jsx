@@ -33,7 +33,7 @@ const Navbar = () => {
   const { isSignedIn, user, isLoaded } = useUser();
 
   return (
-    <div className='shadow-3xl bg-sec-black border-b border-accent  '>
+    <div className='shadow-3xl bg-sec-black border-b border-pri-black  '>
     <Wrapper>
       <div className='justify-between items-center flex h-[15vh] '>
       {/* {!isSignedIn && <SignInButton />} */}
