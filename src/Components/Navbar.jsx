@@ -36,7 +36,8 @@ const Navbar = () => {
     <div className='shadow-3xl '>
     <Wrapper>
       <div className='justify-between items-center flex h-[15vh]'>
-      
+      {!isSignedIn && <SignInButton />}
+          <UserButton />
         <div className='md:flex hidden relative justify-between items-center gap-[10vh]'>  
         <nav >
           <ul className="hidden md:flex gap-10 justify-center items-center ">
@@ -79,9 +80,7 @@ const Navbar = () => {
             </button>)
         } */}
         
-          <button className=' font-medium font-poppins hover:text-[#01796f] transition-transform'>
-          <i className="fi fi-br-menu-burger text-xl"></i>
-          </button>
+          
           
         </div>
       </div>
