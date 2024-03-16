@@ -7,26 +7,11 @@ import map from "../assets/world.jpg";
 import { useNavigate } from "react-router-dom";
 
 const Poster = () => {
-  const [isLoading, setisLoading] = useState(false);
-  const [state, setstate] = useState("");
 
-  const [state1, setstate1] = useState([]);
 
   const navigate = useNavigate();
   const { isSignedIn, user, isLoaded } = useUser();
-  const changestate = (city) => {
-    const matchingStateItem = state1.find((item) => {
-      const foundCity = item?.cities?.find((cityItem) => city === cityItem);
-      return foundCity !== undefined;
-    });
 
-    if (matchingStateItem) {
-      console.log(matchingStateItem.state);
-      setstate(matchingStateItem.state);
-    } else {
-      console.log("not found");
-    }
-  };
 
   return (
     <div>

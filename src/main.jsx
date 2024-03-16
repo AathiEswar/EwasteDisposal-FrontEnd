@@ -14,8 +14,13 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       }}
     >
      <SignedOut>
+
      <App />
+     
       </SignedOut>
+
+
+
       <SignedIn>
       <App />
       </SignedIn>

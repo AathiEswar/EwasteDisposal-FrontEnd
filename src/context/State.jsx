@@ -5,20 +5,14 @@ import mapboxgl from 'mapbox-gl';
 
 const State = (props) => {
 
-    const [isdark, setisdark] = useState(true)
     const [isLoading, setisLoading] = useState(false)
-    const [iscartupdated, setiscartupdated] = useState(false);
-    const [ispopup, setispopup] = useState(false)
-    const [islogin, setislogin] = useState(true);
+
     const [Location, setLocation] = useState("")
     const [Locationstate, setLocationstate] = useState("")
-    const [User, setUser] = useState(null);
-    const [facdata, setfacdata] = useState([])
+  
     const [fetcheddata, setfetcheddata] = useState([])
 
-    const [category, setcategory] = useState([]);
-    const [subcategory, setsubcategory] = useState([]);
-    const [Item, setItem] = useState([]);
+
 
 
   const ReverseGeocodeaddress = async (lat , log) => {
@@ -41,27 +35,27 @@ const State = (props) => {
         );
 
         if (city) {
-          console.log("City:", city.text);
+         // console.log("City:", city.text);
           setLocation(city.text);
         } else {
           console.error("City not found in context.");
         }
 
         if (state) {
-          console.log("State:", state.text);
+        //  console.log("State:", state.text);
           setLocationstate(state.text);
         } else {
           console.error("State not found in context.");
         }
       
       } else {
-        console.error("No results found.");
+       // console.error("No results found.");
       }
     } else {
-      console.error("Error:", response.status, response.statusText);
+     // console.error("Error:", response.status, response.statusText);
     }
   } catch (error) {
-    console.error("Error:", error);
+   // console.error("Error:", error);
   }
   };
 
@@ -75,7 +69,7 @@ const State = (props) => {
   const fetchaddress = async () => {
     setisLoading(true);
     const sendstate =  Locationstate?.replace(/\s/g, "").toLowerCase();
-    console.log(sendstate);
+    //console.log(sendstate);
  
   
       
@@ -86,9 +80,10 @@ const State = (props) => {
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
+      console.log("OUR pos:",position);
       const latitude = position.coords.latitude;
       const longitude = position.coords.longitude;
-      console.log(longitude , latitude)
+     // console.log(longitude , latitude)
       ReverseGeocodeaddress(latitude , longitude);
     });  
   }, [])

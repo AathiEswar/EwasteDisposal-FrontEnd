@@ -37,42 +37,42 @@ const SearchMap = () => {
   };
 
   const Geocodeaddress = async (address) => {
-    console.log(address)
+
     mapboxgl.accessToken =
       "pk.eyJ1IjoibmlzaGFudDc0MTIiLCJhIjoiY2xtYm42NHI5MWN0ZTNkbzVsdzhkNnl0bSJ9.FXHqQifsNwqwWW3g4qEZgw";
     const geocodingApiUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?access_token=${mapboxgl.accessToken}`;
     const response = await fetch(geocodingApiUrl);
     const data = await response.json();
-console.log("I know this will work ! right ? " , data);
+
     const coordinates = data.features[0].center;
 
-    console.log("Pleaseseeeeeeeee workkkkkkkkk!!!!!",coordinates);
+
 
     return coordinates;
   };
 
-    // Handle the search button click
+
     const handleSearch = async (unitaddress) => {
       try {
-        // Remove the previous marker, if it exists
+   
         if(marker){
            marker.remove();        
         }
   
         const searchCoordinates = await Geocodeaddress(searchaddress ? (searchaddress) : (unitaddress));
         const [lng, lat] = searchCoordinates;
-        console.log("His code " , lat , lng);
+      
   
-        // Create a directions request
+      
         const directionsApiUrl = `https://api.mapbox.com/directions/v5/mapbox/cycling/${lng},${lat};${coordinates[0]},${coordinates[1]}?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`;
   
         const response = await fetch(directionsApiUrl);
         const data = await response.json();
   
-        // Get the route coordinates from the directions response
+    
         const routeCoordinates = data.routes[0].geometry.coordinates;
   
-        // Create a GeoJSON object for the route
+    
         const geojson = {
           type: "Feature",
           properties: {},
@@ -82,11 +82,11 @@ console.log("I know this will work ! right ? " , data);
           },
         };
   
-        // Check if the route layer already exists, and update it if it does
+      
         if (map.getSource("route")) {
           map.getSource("route").setData(geojson);
         } else {
-          // Add the route layer to the map
+
           map.addLayer({
             id: "route",
             type: "line",
@@ -106,7 +106,7 @@ console.log("I know this will work ! right ? " , data);
           });
         }
   
-        // Add starting and ending points to the map
+
         const startingPoint = {
           type: "FeatureCollection",
           features: [
@@ -174,23 +174,23 @@ console.log("I know this will work ! right ? " , data);
         Newmarker.addTo(map);
   
         setmarker(Newmarker);
-        // Calculate the bounds of the route and set the map's zoom to fit the route
+    
         const bounds = routeCoordinates.reduce((bounds, coord) => {
           return bounds.extend(coord);
         }, new mapboxgl.LngLatBounds(routeCoordinates[0], routeCoordinates[0]));
   
         map.fitBounds(bounds, {
-          padding: 50, // You can adjust the padding as needed
-          duration: 1000, // Animation duration in milliseconds
+          padding: 50, 
+          duration: 1000, 
         });
       } catch (error) {
         console.error("Error:", error);
       }
     };
 
-    const getTheDamnName = async () => {
+    const getTheName = async () => {
    
-        // Get the user's current position using Geolocation API
+      
         const position = await new Promise((resolve, reject) => {
           navigator.geolocation.getCurrentPosition(resolve, reject ,  {
             enableHighAccuracy: true
@@ -199,24 +199,24 @@ console.log("I know this will work ! right ? " , data);
     
         const { latitude, longitude } = position.coords;
 
-        console.log("THis is the final right ?  my code " , latitude , longitude);
+   
     
-        // Call Mapbox Geocoding API to get the location name
+      
         const response = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=pk.eyJ1IjoibmlzaGFudDc0MTIiLCJhIjoiY2xtYm42NHI5MWN0ZTNkbzVsdzhkNnl0bSJ9.FXHqQifsNwqwWW3g4qEZgw`);
         const data = await response.json();
     
-        // Extract the location name from the API response
+       
         const locationName = data.features[0].place_name;
     
-        console.log("Current user location: my code", data);
+    
         return locationName;
-        // Now you have the current user location in naming form
+     
       
     };
 
   const SetAddressMarker = async()=>{
    
-  const Location  = await getTheDamnName() ;
+  const Location  = await getTheName() ;
     const addressToGeocode = decodeURIComponent(Location);
     console.log(Location.length > 100 ? Location.slice(0, 100).length : Location.length );
     
@@ -248,7 +248,7 @@ console.log("I know this will work ! right ? " , data);
       });
 
     return () => {
-      // Clean up the map when the component unmounts
+    
       mapboxgl.accessToken = null;
     };
   }
