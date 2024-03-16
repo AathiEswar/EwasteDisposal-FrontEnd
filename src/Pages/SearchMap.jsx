@@ -253,14 +253,18 @@ console.log("I know this will work ! right ? " , data);
     };
   }
 
-  useEffect(async() => {
+  const getDataArray = async()=>{
+    SetAddressMarker()
+    await axios.get("/search").then((res)=>{
+      const dataArray = res.data;
+      setCentersData(dataArray);
+     
+    })
+  }
 
-      SetAddressMarker()
-      await axios.get("/search").then((res)=>{
-        const dataArray = res.data;
-        setCentersData(dataArray);
-       
-      })
+  useEffect(() => {
+    getDataArray();
+     
   }, []);
 
    

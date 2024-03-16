@@ -42,7 +42,7 @@ const Poster = () => {
             className="max-h-[100vh] w-full object-cover rounded-xl"
           />
         </div>
-        <div className="postercard w-full h-fit  mt-[5vh] shadow-3xl rounded-xl p-[3vh]  other md:ml-5 mb-10 z-10 searchtext bg-sec-black">
+        <div className="border-2 border-pri-black postercard w-full h-fit  mt-[5vh] shadow-3xl rounded-xl p-[3vh]  other md:ml-5 mb-10 z-10 searchtext bg-sec-black">
           <h1 className="md:text-[5vh] text-[5vh] font-montserrat  font-bold text-accent">
             Welcome To{" "}
             <span className="text-accent">E-Waste Facility Locator</span>
