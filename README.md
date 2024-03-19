@@ -1,4 +1,4 @@
-https://ewaste-disposal.vercel.app/
+ https://ewaste-disposal.vercel.app/
 
 
 map.addControl(new mapboxgl.GeolocateControl({
