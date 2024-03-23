@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import {Navbar} from "./Components" ;
 import {Homepage , SearchMap } from "./Pages" ;
+import AdminPage from './Pages/AdminPage';
 import State from './context/State';
 // Import your publishable key
 
@@ -26,6 +27,7 @@ const App = () => {
         <Routes>
           <Route exact path="/" element={<Homepage/>} />
           <Route exact path="/search" element={<SearchMap/>} />
+          <Route exact path="/admin" element={<AdminPage/>} />
         </Routes>
   
       </Router>

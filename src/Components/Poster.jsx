@@ -4,14 +4,14 @@ import { useUser } from "@clerk/clerk-react";
 import { SignInButton } from "@clerk/clerk-react";
 
 import map from "../assets/world.jpg";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Poster = () => {
 
 
   const navigate = useNavigate();
   const { isSignedIn, user, isLoaded } = useUser();
-
+ const isAdmin = user?.publicMetadata.admin;
 
   return (
     <div>
@@ -41,7 +41,7 @@ const Poster = () => {
           </p>
 
           <div className="mt-10 flex  gap-5">
-            {isSignedIn ? (
+            {isSignedIn && !isAdmin ? (
               <button
                className="text-sec-black hover:text-accent bg-accent hover:bg-sec-black hover:scale-105 hover:shadow-[0_0_10px_0_rgba(0,0,0,0.3)] hover:shadow-accent transition-transform  font-montserrat font-semibold p-4 rounded-lg  w-fit"
                 onClick={() => {
@@ -50,13 +50,23 @@ const Poster = () => {
               >
                 Locate Facility
               </button>
-            ) : (
+            ) : ( !isAdmin &&
               <SignInButton>
                 <button className="text-sec-black hover:text-accent bg-accent hover:bg-sec-black hover:scale-105 hover:shadow-[0_0_10px_0_rgba(0,0,0,0.3)] hover:shadow-accent transition-transform  font-montserrat font-semibold p-4 rounded-lg  w-fit">
                   Sign in 
                 </button>
               </SignInButton>
+              
             )}
+            {
+              isAdmin && 
+              <button 
+            
+            className="text-sec-black hover:text-accent bg-accent hover:bg-sec-black hover:scale-105 hover:shadow-[0_0_10px_0_rgba(0,0,0,0.3)] hover:shadow-accent transition-transform  font-montserrat font-semibold p-4 rounded-lg  w-fit">
+                 <Link to="/admin">Admin Page</Link>
+                </button>
+            }
+           
           </div>
         </div>
         <div className="hidden md:flex w-full justify-center "></div>

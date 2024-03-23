@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import mapboxgl, { Marker } from "mapbox-gl";
 import polyline from "@mapbox/polyline";
-import { useContext } from "react";
+import { useContext , useRef} from "react";
 import Context from "../context/Context";
 import { Wrapper  } from "../Components";
 import { useParams } from "react-router-dom";
 import { set } from "mongoose";
 import { getLocation } from "../context/data.model";
 import axios from "axios";
+import {useUser} from "@clerk/clerk-react";
 
 const SearchMap = () => {
   const { Location , Locationstate , facdata , fetcheddata} = useContext(Context);
@@ -17,6 +18,28 @@ const SearchMap = () => {
   const [searchaddress, setsearchaddress] = useState("");
   const [initaddress, setinitaddress] = useState("");
   const [centersData ,setCentersData] = useState([]);
+  const scrollToRef = useRef(null);
+  const { user } = useUser();
+
+
+  // State to trigger the scroll
+  const [scroll, setScroll] = useState(false);
+
+  // Function to handle the event and trigger the scroll
+  const handleEvent = () => {
+    // Handle your event here
+    // For example, clicking a button
+    setScroll(true);
+  };
+
+  // Effect to scroll to the referenced element when scroll state changes
+  useEffect(() => {
+    if (scrollToRef.current) {
+      scrollToRef.current.scrollIntoView({ behavior: 'smooth',block: "end" });
+      // After scrolling, reset the scroll state to false
+      setScroll(false);
+    }
+  }, [scroll]);
 
   // Create a function to initialize the map
   const initializeMap = (coordinates1) => {
@@ -37,6 +60,7 @@ const SearchMap = () => {
   };
 
   const Geocodeaddress = async (address) => {
+    console.log("The address" , address);
 
     mapboxgl.accessToken =
       "pk.eyJ1IjoibmlzaGFudDc0MTIiLCJhIjoiY2xtYm42NHI5MWN0ZTNkbzVsdzhkNnl0bSJ9.FXHqQifsNwqwWW3g4qEZgw";
@@ -51,14 +75,34 @@ const SearchMap = () => {
     return coordinates;
   };
 
+  function convertTo20Words(inputString) {
+    // Split the input string into an array of words
+    let words = inputString.split(/\s+/);
+    
+    // Limit the array to 20 words
+    let limitedWords = words.slice(0, 15);
+    
+    // Join the limited words back into a string
+    let resultString = limitedWords.join(' ');
 
+    return resultString;
+}
+
+function has20Words(inputString) {
+  // Split the input string into an array of words
+  let words = inputString.split(/\s+/);
+  console.log("The word : " , words);
+  // Check if the array has at least 20 words
+  return words.length >= 15;
+}
     const handleSearch = async (unitaddress) => {
+      handleEvent();
       try {
    
         if(marker){
            marker.remove();        
         }
-  
+        unitaddress = !has20Words(unitaddress) ? convertTo20Words(unitaddress): unitaddress
         const searchCoordinates = await Geocodeaddress(searchaddress ? (searchaddress) : (unitaddress));
         const [lng, lat] = searchCoordinates;
       
@@ -186,6 +230,7 @@ const SearchMap = () => {
       } catch (error) {
         console.error("Error:", error);
       }
+     
     };
 
     const getTheName = async () => {
@@ -220,9 +265,9 @@ const SearchMap = () => {
     const addressToGeocode = decodeURIComponent(Location);
     console.log(Location.length > 100 ? Location.slice(0, 100).length : Location.length );
     
-    
+   
     // Geocode the initial address and set the initial coordinates
-    Geocodeaddress(Location.length > 120 ? Location.slice(0, 120) : Location )
+    Geocodeaddress(!has20Words ? convertTo20Words(Location): Location )
       .then((initialCoordinates) => {
         setCoordinates(initialCoordinates);
         const map1 = initializeMap();
@@ -267,6 +312,17 @@ const SearchMap = () => {
      
   }, []);
 
+  async function handleRequestToCenter (centerId){
+    //console.log("userId : ",user.id , "center id :" , centerId);
+  
+    const userId = user.id;
+try{
+    await axios.post("/search" , {userId ,centerId }).then(req => console.log(req))
+}
+catch(err){
+console.log(err);
+}
+  }
    
 
    
@@ -275,7 +331,7 @@ const SearchMap = () => {
   return (
     <Wrapper>
       
-      <div className="relative mt-[2vh] bg-sec-black">
+      <div className="relative mt-[2vh] bg-sec-black" ref={scrollToRef}>
 
       
 
@@ -304,16 +360,27 @@ const SearchMap = () => {
         </h1>
         <div className="flex flex-col md:flex-row gap-4 flex-wrap">
         {centersData?.map((item) => (
-            <div className="h-fit items-center gap-[2vw] shadow-3xl p-4 rounded-lg bg-sec-black md:max-w-[60vh] border-accent border-2">
+          <div className="h-fit items-center gap-[2vw] shadow-3xl p-4 rounded-lg bg-sec-black md:max-w-[60vh] border-accent border-2">
               <p className="font-montserrat font-semibold  text-white">{item?.Name_Address}</p>
               <h2 className="font-montserrat font-bold mt-2 text-white ">Capacity : <span className="text-accent"> {item?.Installed_Capacity_Metric_Tons_per_Annum_MTA} </span></h2>
+              
+              <div className="flex justify-between">
               <button
               className="hover:bg-accent bg-white mt-[2vh] hover:scale-105 shadow-lg  hover:text-white transition-transform  font-montserrat font-semibold p-2 rounded-lg  w-fit"
               onClick={()=>{handleSearch(item?.Name_Address)}}
             >
               Go
             </button>
-            </div>))}
+            <button
+              className="hover:bg-accent bg-white mt-[2vh] hover:scale-105 shadow-lg  hover:text-white transition-transform  font-montserrat font-semibold p-2 rounded-lg  w-fit"
+              onClick={()=>{handleRequestToCenter(item._id)}}
+            >
+              Send Request
+            </button>
+            </div>
+          </div>
+            
+            ))}
         </div>
       </div>
     </div>}
