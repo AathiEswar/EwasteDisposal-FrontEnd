@@ -10,8 +10,10 @@ function AdminPage() {
   async function loadCustomerRequest() {
 
  const getCustomerArray = await axios.post("/admin" , {Useremail})
+//console.log(getCustomerArray.data.uniqueCustomers[0].primaryEmailAddress.emailAddress);
 //console.log(getCustomerArray.data.uniqueCustomers);
 setCustomerData(getCustomerArray.data.uniqueCustomers)
+
     // const CustomerData = 
     // setCustomerData(CustomerData)
   }
@@ -21,12 +23,47 @@ setCustomerData(getCustomerArray.data.uniqueCustomers)
   });
 
   return (
-    <div className="text-white">
+    <section className="w-full min-h-full flex flex-wrap gap-6 p-10">
+  
       {customerData?.map((item) => (
-        <p>{item}</p>
+        
+        <div className="h-fit items-center gap-[2vw] shadow-3xl p-4 rounded-lg bg-sec-black md:max-w-[60vh] border-accent border-2">
+<p className="font-montserrat font-semibold  text-white">
+Full Name:{" "}
+  <span className="text-accent">
+    {" "}
+    {item[0]?.fullName}{" "}
+  </span>
+</p>
+<p className="font-montserrat font-semibold  text-white">
+Id:{" "}
+  <span className="text-accent">
+    {" "}
+    {item[0]?.id}{" "}
+  </span>
+</p>
+<p className="font-montserrat font-semibold  text-white">
+Email address:{" "}
+  <span className="text-accent">
+    {" "}
+    {item[0]?.primaryEmailAddress.emailAddress}{" "}
+  </span>
+</p>
+<p className="font-montserrat font-semibold  text-white">
+ Address:{" "}
+  <span className="text-accent">
+    {" "}
+    {item[1]}{" "}
+  </span>
+</p>
+
+</div>
+
       ))}
-    </div>
+    
+    </section>
   );
 }
 
 export default AdminPage;
+
