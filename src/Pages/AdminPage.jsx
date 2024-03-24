@@ -8,11 +8,16 @@ function AdminPage() {
   const Useremail = user.emailAddresses[0].emailAddress;
 
   async function loadCustomerRequest() {
+ try{
+  const getCustomerArray = await axios.post("/admin" , {Useremail});
+  //console.log(getCustomerArray.data)
+  setCustomerData(getCustomerArray.data.uniqueCustomers)
+ }
+catch(err){}
 
- const getCustomerArray = await axios.post("/admin" , {Useremail})
 //console.log(getCustomerArray.data.uniqueCustomers[0].primaryEmailAddress.emailAddress);
 //console.log(getCustomerArray.data.uniqueCustomers);
-setCustomerData(getCustomerArray.data.uniqueCustomers)
+
 
     // const CustomerData = 
     // setCustomerData(CustomerData)
