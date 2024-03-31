@@ -6,7 +6,7 @@ map.addControl(new mapboxgl.GeolocateControl({
         enableHighAccuracy: true
     },
     trackUserLocation: true,
-    showUserHeading: true
+    showUserHeading: true 
 }));
 
 
