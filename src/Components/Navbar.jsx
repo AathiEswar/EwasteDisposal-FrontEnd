@@ -14,19 +14,38 @@ import { useUser } from "@clerk/clerk-react";
 
 const Navbar = () => {
   const { Location } = useContext(Context);
-
+  const [credits , setCredits] = useState()
   const navigate = useNavigate();
 
 
 
   const { isSignedIn, user, isLoaded } = useUser();
 
+  if(isSignedIn)
+  useEffect(()=>{
+     setCredits(user.unsafeMetadata.credits)
+  })
+
+
   return (
     <div className="shadow-3xl bg-sec-black border-b-2 border-pri-black  ">
       <Wrapper>
         <div className="justify-between items-center flex h-[15vh] ">
           {/* {!isSignedIn && <SignInButton />} */}
+         
           <UserButton />
+
+        {
+          isSignedIn && (
+            <p className="text-white">Credits : {credits}</p>
+
+          )
+        }
+            
+        
+         
+
+          
           <div className="md:flex hidden relative justify-between items-center gap-[10vh]">
             <nav>
               <ul className="hidden md:flex gap-10 justify-center items-center ">

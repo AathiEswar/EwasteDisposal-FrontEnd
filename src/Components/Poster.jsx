@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 
 import { SignInButton } from "@clerk/clerk-react";
-
 import map from "../assets/world.jpg";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Poster = () => {
 
@@ -12,6 +12,30 @@ const Poster = () => {
   const navigate = useNavigate();
   const { isSignedIn, user, isLoaded } = useUser();
  const isAdmin = user?.publicMetadata.admin;
+
+
+async function InitializeCredits(){
+   await axios.post("/initializecredits" , {user});
+}
+
+if(isSignedIn){
+
+  if (user.unsafeMetadata && Object.keys(user.unsafeMetadata).length > 0) {
+    console.log("there is credits in user account");
+  }
+  else{
+    console.log("no credits");
+    InitializeCredits();
+  }
+}
+
+
+
+
+
+
+
+// console.log(user.unsafeMetadata);
 
   return (
     <div>
@@ -29,7 +53,7 @@ const Poster = () => {
         </div>
         <div className="border-2 border-pri-black postercard w-full h-fit  mt-[5vh] shadow-3xl rounded-xl p-[3vh]  other md:ml-5 mb-10 z-10 searchtext bg-sec-black">
           <h1 className="md:text-[5vh] text-[5vh] font-montserrat  font-bold text-accent">
-            Welcome To{" "}
+            Welcome To{" "} 
             <span className="text-accent">E-Waste Facility Locator</span>
           </h1>
           <p className=" text-gray text-lg font-montserrat font-medium">

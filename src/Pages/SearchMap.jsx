@@ -22,6 +22,9 @@ const SearchMap = () => {
   const [userLat, setUserLat] = useState(null);
   const [userLng, setUserLng] = useState(null);
   const [address, setAddress] = useState('');
+  const [centerIdAdmin , setcenterIdAdmin] = useState();
+  const [approval , setApproval] = useState(true);
+  
 
   useEffect(() => {
     const getUserCoordinates = () => {
@@ -44,7 +47,7 @@ const SearchMap = () => {
       if (userLat !== null && userLng !== null) {
         try {
           const response = await fetch(
-            `https://nominatim.openstreetmap.org/reverse?lat=${userLat}&lon=${userLng}&format=json`
+            `https://nominatim.openstreetmap.org/reverse?lat=${userLat}&lon=${userLng}&format=json&accept-language=en`
           );
           const data = await response.json();
           setAddress(data.display_name);
@@ -329,22 +332,38 @@ const SearchMap = () => {
   useEffect(() => {
     getDataArray();
   }, []);
+function handleApproval(){
+  const approvalOfRequest = user.unsafeMetadata.isAccepted;
+  setApproval(approvalOfRequest);
+}
 
-  async function handleRequestToCenter(centerId) {
-    //console.log("userId : ",user.id , "center id :" , centerId);
-    
-   
-   
+useEffect(()=>{
+  handleApproval()
+  
+})
+
+
+  async function handleRequestToCenter(centerId ) {
+    // //console.log("userId : ",user.id , "center id :" , centerId);
+    // user.update({
+    //   unsafeMetadata: {
+    //     "isAccepted" : false ,
+    //     "centerId" : centerId
+    //   }
+    // })
+    setcenterIdAdmin(centerId)
     const userData = user;
     console.log(userData);
     try {
       await axios
-        .post("/search", { userData, centerId , address})
+        .post("/search", { userData, centerId , address })
         .then((req) => console.log(req));
     } catch (err) {
       console.log(err);
     }
   }
+
+
 
   return (
     <Wrapper>
@@ -368,6 +387,7 @@ const SearchMap = () => {
         </div> */}
       </div>
       {centersData.length > 0 && (
+
         <div>
           <div className="w-full h-fit mt-[2vh]">
             <h1 className="mb-[5vh] font-montserrat font-bold text-2xl text-white ">
@@ -375,9 +395,13 @@ const SearchMap = () => {
             </h1>
             <div className="flex gap-4 flex-wrap justify-center items-center">
               {centersData?.map((item) => (
-                <div className="h-fit items-center gap-[2vw] shadow-3xl p-4 rounded-lg bg-sec-black md:max-w-[60vh] border-accent border-2">
+                
+
+                <div className="relative h-fit items-center gap-[2vw] shadow-3xl p-4 rounded-lg bg-sec-black md:max-w-[60vh] border-accent border-2">
+                
+                 
                   <p className="font-montserrat font-semibold  text-white">
-                    {item?.Name_Address}
+                    {item?.Name_Address} 
                   </p>
                   <h2 className="font-montserrat font-bold mt-2 text-white ">
                     Capacity :{" "}
@@ -406,7 +430,17 @@ const SearchMap = () => {
                     </button> */}
                     <ConfirmRequestButton handleEvent={handleRequestToCenter} itemId = {item._id}/>
                   </div>
-                </div>
+{/* {
+   
+   ( <div className="absolute bg-accent  top-0 bottom-0 left-0 right-0 grid place-content-center">
+                    <p className="text-white text-center text-xl " >You have Requested For Service </p>
+                  </div>
+              
+              )
+              }  */}
+               
+
+              </div>
               ))}
             </div>
           </div>

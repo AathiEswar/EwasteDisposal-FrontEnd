@@ -1,71 +1,64 @@
 import React, { useEffect } from "react";
 import axios from "axios";
-import { useState } from "react";
+import { useState } from "react"; 
 import { useUser } from "@clerk/clerk-react";
+import CustomerCard from "../Components/adminpage/customerCard";
+
 function AdminPage() {
   const [customerData, setCustomerData] = useState([]);
   const {user }= useUser();
   const Useremail = user.emailAddresses[0].emailAddress;
 
   async function loadCustomerRequest() {
+ 
  try{
   const getCustomerArray = await axios.post("/admin" , {Useremail});
-  //console.log(getCustomerArray.data)
-  setCustomerData(getCustomerArray.data.uniqueCustomers)
- }
+  // console.log(getCustomerArray);
+   const destructuredArray = getCustomerArray.data.uniqueCustomers;
+  // console.log(destructuredArray.length);
+    const dataArray = [];
+
+    for(let i=0;i<destructuredArray.length ; i++){
+      dataArray.push([destructuredArray[i].userData , destructuredArray[i].address]);
+    }
+
+ //console.log(dataArray);
+  //  destructuredArray.array.forEach(element => {
+  //    //console.log(element);
+  //    dataArray.push(element.userData);
+  //  });
+
+
+
+  setCustomerData(dataArray);
+  // console.log(customerData);
+}
 catch(err){}
 
-//console.log(getCustomerArray.data.uniqueCustomers[0].primaryEmailAddress.emailAddress);
-//console.log(getCustomerArray.data.uniqueCustomers);
-
-
-    // const CustomerData = 
-    // setCustomerData(CustomerData)
   }
+//   async function handleRequesAccept(userId){
+//     console.log("handle admin req");
+//     const centerEmail = user.primaryEmailAddress.emailAddress;
+//     await axios.post("/adminreq" , {userId , centerEmail})
 
+// }
+
+// async function handleOtp(userId , userEmail){
+// await axios.post("/handleotp" , {userId , userEmail});
+// }
   useEffect(() => {
     loadCustomerRequest();
   });
 
   return (
-    <section className="w-full min-h-full flex flex-wrap gap-6 p-10">
+    <section className="max-w-full min-h-full flex flex-wrap gap-6 p-[5%]">
   
       {customerData?.map((item) => (
-        
-        <div className="h-fit items-center gap-[2vw] shadow-3xl p-4 rounded-lg bg-sec-black md:max-w-[60vh] border-accent border-2">
-<p className="font-montserrat font-semibold  text-white">
-Full Name:{" "}
-  <span className="text-accent">
-    {" "}
-    {item[0]?.fullName}{" "}
-  </span>
-</p>
-<p className="font-montserrat font-semibold  text-white">
-Id:{" "}
-  <span className="text-accent">
-    {" "}
-    {item[0]?.id}{" "}
-  </span>
-</p>
-<p className="font-montserrat font-semibold  text-white">
-Email address:{" "}
-  <span className="text-accent">
-    {" "}
-    {item[0]?.primaryEmailAddress.emailAddress}{" "}
-  </span>
-</p>
-<p className="font-montserrat font-semibold  text-white">
- Address:{" "}
-  <span className="text-accent">
-    {" "}
-    {item[1]}{" "}
-  </span>
-</p>
-
-</div>
-
-      ))}
-    
+        <CustomerCard  item={item}/>
+      )
+      
+      )}
+ 
     </section>
   );
 }
