@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 
 import { SignInButton } from "@clerk/clerk-react";
@@ -18,16 +18,20 @@ async function InitializeCredits(){
    await axios.post("/initializecredits" , {user});
 }
 
-if(isSignedIn){
+useEffect(()=>{
+  if(isSignedIn){
 
-  if (user.unsafeMetadata && Object.keys(user.unsafeMetadata).length > 0) {
-    console.log("there is credits in user account");
+    if (user.unsafeMetadata && Object.keys(user.unsafeMetadata).length > 0) {
+      console.log("there is credits in user account");
+    }
+    else{
+      console.log("no credits");
+      InitializeCredits();
+    }
   }
-  else{
-    console.log("no credits");
-    InitializeCredits();
-  }
-}
+},[])
+
+
 
 
 
