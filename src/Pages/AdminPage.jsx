@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react"; 
 import { useUser } from "@clerk/clerk-react";
-import CustomerCard from "../Components/adminpage/customerCard";
+import CustomerCard from "../Components/adminpage/CustomerCard" 
 
 function AdminPage() {
   const [customerData, setCustomerData] = useState([]);
